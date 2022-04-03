@@ -125,11 +125,6 @@
   position: relative;
 }
 
-@media(max-width: 576px){
-  .contacts_card{
-    margin-bottom: 15px !important;
-  }
-}
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
