@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
-import {MessageSseService} from "./sse/message.sse.service";
-import {MessageList} from "./dto/message-list";
+import {MessageSseService} from "./services/sse/message.sse.service";
+import {MessageList} from "./util/dto/message-list";
 import {environment} from "../environments/environment";
 
 @Component({
