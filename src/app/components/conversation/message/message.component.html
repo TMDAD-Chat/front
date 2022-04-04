@@ -1,0 +1,25 @@
+<ng-template [ngIf]="isOwnMessage" [ngIfElse]="incommingMessage">
+  <div class="d-flex justify-content-end mb-4">
+    <div class="msg_cotainer_send">
+      {{ message.content }}
+      <span class="msg_time_send">{{ message.creationTimestamp | date:'short'}}</span>
+    </div>
+    <div class="img_cont_msg">
+      <img src="https://therichpost.com/wp-content/uploads/2020/06/avatar2.png"
+        class="rounded-circle user_img_msg">
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #incommingMessage>
+  <div class="d-flex justify-content-start mb-4">
+    <div class="img_cont_msg">
+      <img src="https://therichpost.com/wp-content/uploads/2020/06/avatar2.png"
+        class="rounded-circle user_img_msg">
+    </div>
+    <div class="msg_cotainer">
+      {{ message.content }}
+      <span class="msg_time">{{ message.creationTimestamp | date:'short' }}</span>
+    </div>
+  </div>
+</ng-template>

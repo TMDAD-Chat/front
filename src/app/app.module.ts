@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { ChatListComponent } from './components/chat-list/chat-list.component';
 import { ConversationComponent } from './components/conversation/conversation.component';
 import { ContactComponent } from './components/chat-list/contact/contact.component';
+import { MessageComponent } from './components/conversation/message/message.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -13,10 +15,12 @@ import { ContactComponent } from './components/chat-list/contact/contact.compone
     ChatListComponent,
     ConversationComponent,
     ContactComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

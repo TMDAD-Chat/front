@@ -3,7 +3,7 @@ export enum MessageType {
   TEXT, FILE
 }
 
-export interface Message {
+export interface MessageInterface {
 
   messageType: MessageType;
   content: string;
