@@ -3,6 +3,8 @@ import * as $ from 'jquery';
 import {MessageSseService} from "./services/sse/message.sse.service";
 import {MessageList} from "./util/dto/message-list";
 import {environment} from "../environments/environment";
+import { ContactService } from './services/contact.service';
+import { ContactInterface } from './util/dto';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +12,10 @@ import {environment} from "../environments/environment";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'front';
+  contactList: ContactInterface[] = [];
+  selectedContact!: ContactInterface;
 
-  constructor(private messageService : MessageSseService) {
+  constructor(private messageService : MessageSseService, private contactService: ContactService) {
   }
 
   ngOnInit(): void {
@@ -26,5 +29,13 @@ export class AppComponent implements OnInit{
       console.log(data)
     })
 
+    this.contactService.getContacts().subscribe((list) => {
+      this.contactList = list;
+    });
+  }
+
+  selectContact(selected: ContactInterface) {
+    // TODO: load chat messages
+    this.selectedContact = selected;
   }
 }

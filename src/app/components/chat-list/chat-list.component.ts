@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ContactService } from 'src/app/services/contact.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ContactInterface } from 'src/app/util/dto';
 
 @Component({
@@ -7,24 +6,17 @@ import { ContactInterface } from 'src/app/util/dto';
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.css']
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent {
 
-  contactList: ContactInterface[] = [];
+  @Input() contactList: ContactInterface[] = [];
   selected!: number;
+  @Output() selectEvent = new EventEmitter<ContactInterface>();
 
-  constructor(private contactService: ContactService) { }
-
-  ngOnInit(): void {
-    this.contactService.getContacts().subscribe(
-      list => {
-        this.contactList = list;
-      }
-    )
-  }
+  constructor() { }
 
   selectContact(index: number) {
-    // TODO: load chat messages
     this.selected = index;
+    this.selectEvent.emit(this.contactList[index]);
   }
 
 }

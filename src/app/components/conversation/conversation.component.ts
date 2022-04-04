@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ConversationService } from 'src/app/services/conversation.service';
+import { ContactInterface, MessageInterface } from 'src/app/util/dto';
 
 @Component({
   selector: 'app-conversation',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConversationComponent implements OnInit {
 
-  constructor() { }
+  @Input() contact!: ContactInterface;
+  messageList!: MessageInterface[];
+  constructor(private conversationService: ConversationService) { }
 
   ngOnInit(): void {
+    this.conversationService.getConversationMessages().subscribe({
+      next: (messages) => {
+        this.messageList = messages;
+      },
+      error: (err) => {
+        this.messageList = [];
+      },
+    });
   }
 
 }
