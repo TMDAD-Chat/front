@@ -26,6 +26,10 @@
   padding: 10px;
   position: relative;
 }
+.msg_cotainer img {
+  max-width: 100%;
+}
+
 .msg_time{
   position: absolute;
   left: 0;
