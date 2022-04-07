@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Constants } from '../util/constants';
 import { MessageInterface } from '../util/dto';
 
 @Injectable({
@@ -31,11 +32,21 @@ export class ConversationService {
         creationTimestamp: new Date()
       },
       {
+        messageType: 1,
+        content: "panigale.jpg",
+        sender: "contact",
+        creationTimestamp: new Date()
+      },
+      {
         messageType: 0,
         content: "You are welcome",
         sender: "me",
         creationTimestamp: new Date()
       }
     ]);
+  }
+
+  sendMessage(body: MessageInterface) {
+    return this.http.post(Constants.sendMessageEndpoint, body)
   }
 }
