@@ -1,7 +1,7 @@
 import {Injectable, NgZone} from '@angular/core';
 import {SseService} from "./sse.service";
 import {Observable} from "rxjs";
-import {MessageList} from "../dto/message-list";
+import {MessageList} from "../../util/dto/message-list";
 
 @Injectable({
   providedIn: 'root'
