@@ -24,4 +24,18 @@ export class ConversationComponent implements OnInit {
     });
   }
 
+  sendMessage() {
+    console.log('mensaje');
+  }
+
+  sendFile(event: any) {
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+      let file: File = fileList[0];
+      this.conversationService.sendFile(file, 'testangular').subscribe({
+        next: (data) => console.log(data),
+        error: (error) => console.error(error),
+      });
+    }
+  }
 }
