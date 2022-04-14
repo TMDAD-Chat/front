@@ -7,7 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,10 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    AngularFireAuthModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
