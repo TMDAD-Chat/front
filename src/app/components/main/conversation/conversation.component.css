@@ -106,3 +106,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #5454b6;
 }
+
+input[type="file"] {
+  display: none;
+}

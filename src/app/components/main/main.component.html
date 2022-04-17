@@ -1,0 +1,8 @@
+<div class="d-flex justify-content-center">
+  <div class="col-md-4 col-xl-3 chat">
+    <app-chat-list [contactList]="contactList" (selectEvent)="selectContact($event)"></app-chat-list>
+  </div>
+  <div class="col-md-8 col-xl-6 chat">
+    <app-conversation *ngIf="selectedContact" [contact]="selectedContact"></app-conversation>
+  </div>
+</div>

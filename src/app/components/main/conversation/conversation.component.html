@@ -20,15 +20,16 @@
   </div>
   
   <div class="card-footer">
-    <div class="input-group">
-      <span class="input-group-text attach_btn">
-        <i
-          class="fas fa-paperclip"></i></span>
-      <textarea name="" class="form-control type_msg"
-        placeholder="Type your message..."></textarea>
-        <span class="input-group-text send_btn"><i
-            class="fas fa-location-arrow"></i></span>
-      
-    </div>
+    <form class="input-group">
+      <label for="file-upload" class="input-group-text attach_btn">
+        <i class="fas fa-paperclip"></i>
+      </label>
+      <input id="file-upload" type="file" (change)="sendFile($event)" accept=".jpg, .png,.pdf,.doc,.docx">
+      <textarea class="form-control type_msg" placeholder="Type your message...">
+      </textarea>
+      <span class="input-group-text send_btn" (click)="sendMessage()">
+        <i class="fas fa-location-arrow"></i>
+      </span>
+    </form>
   </div>
 </div>

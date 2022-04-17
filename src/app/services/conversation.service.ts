@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Constants } from '../util/constants';
@@ -48,5 +48,12 @@ export class ConversationService {
 
   sendMessage(body: MessageInterface) {
     return this.http.post(Constants.sendMessageEndpoint, body)
+  }
+
+  sendFile(file: File, chat: string) {
+    let formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('chat', chat);
+    return this.http.post(Constants.sendMessageEndpoint, formData);
   }
 }

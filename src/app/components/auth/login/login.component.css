@@ -1,0 +1,24 @@
+.main-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 5px 0;
+}
+
+.google-btn {
+  padding: 0;
+  border: 0;
+  margin: 0.5rem 0;
+  background-color: transparent;
+}

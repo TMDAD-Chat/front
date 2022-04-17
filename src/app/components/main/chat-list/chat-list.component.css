@@ -17,11 +17,16 @@
   border-radius: 15px 15px 0 0 !important;
   border-bottom: 0 !important;
   background-color: rgba(0,0,0,0.25);
+  color: white;
 }
 .card-header .input-group {
   width: 95%;
 }
-
+.user_img{
+  height: 70px;
+  width: 70px;
+  border:1.5px solid #f5f6fa;
+}
 .search{
   border-radius: 15px 0 0 15px !important;
   background-color: rgba(0,0,0,0.3) !important;
@@ -54,9 +59,6 @@
 }
 
 #action_menu_btn{
-  position: absolute;
-  right: 10px;
-  top: 10px;
   color: white;
   cursor: pointer;
   font-size: 20px;
@@ -68,8 +70,8 @@
   background-color: rgba(0,0,0,0.5);
   color: white;
   border-radius: 15px;
-  top: 30px;
-  right: 15px;
+  top: 120px;
+  right: -100px;
   display: none;
 }
 .action_menu ul{
