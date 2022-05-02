@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../util/dto/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +12,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   user$: Observable<firebase.User | null>;
   userDetails!: firebase.User;
-  constructor(private firebaseAuth: AngularFireAuth) {
+  constructor(private firebaseAuth: AngularFireAuth, private httpClient: HttpClient) {
     this.user$ = firebaseAuth.authState;
     this.user$.subscribe({
       next: (data) => {
@@ -23,13 +26,35 @@ export class AuthService {
     })
   }
 
-  signInWithGoogle() {
-    return this.firebaseAuth.signInWithPopup(
+  async signInWithGoogle() {
+    const value = await this.firebaseAuth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider()
     );
+    if(value.user !== null && !!value.user.displayName && !!value.user.email && !!value.user.photoURL) {
+      const user: User = {
+        name: value.user.displayName,
+        email: value.user.email,
+        photoUri: value.user.photoURL
+      }
+
+      return await firstValueFrom(this.registerUser(user));
+    }else{
+      this.logout();
+      return null;
+    }
   }
 
   logout() {
     this.firebaseAuth.signOut();
+  }
+
+  registerUser(user: User) {
+    return this.httpClient.put<User>(
+      environment.gateway +
+        environment.userApi +
+        '/user/' +
+        encodeURI(user.email),
+      user
+    );
   }
 }
