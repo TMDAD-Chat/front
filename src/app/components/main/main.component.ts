@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ContactService } from 'src/app/services/contact.service';
 import { MessageSseService } from 'src/app/services/sse/message.sse.service';
-import {MessageInterface, MessageList} from 'src/app/util/dto';
+import { MessageInterface, MessageList, UserDto } from 'src/app/util/dto';
 import {HttpService} from "../../services/http.service";
-import {UserDto} from "../../util/dto/user-dto";
-import {environment} from "../../../environments/environment";
+import { forkJoin, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -27,29 +26,25 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.contactList = [];
     const conversations = this.contactService.getConversations();
-    if(conversations !== undefined){
-      conversations.subscribe(c => {
-        c.conversations.forEach(convo => {
-          //if(convo.recipientType == "USER"){
-            this.httpService.getUser(convo.sender).subscribe(u => {
-              this.contactList.push(u)
-            })
-          /*}else{
-            this.contactList.push({
-              name: "",
-              isSuperuser: false,
-              email: convo.recipient,
-              photoUri: ""
-            })
-          }*/
+    conversations
+      .pipe(
+        switchMap((conversations) => {
+          if (conversations !== undefined) {
+            const userReq = conversations.conversations.map((c) =>
+              this.contactService.getUser(c.sender)
+            );
+            // TODO: obtener la información de los contactos desde la primer petición
+            return forkJoin(userReq);
+          } else return of([]);
         })
-      })
-    }
+      )
+      .subscribe((contacts) => {
+        this.contactList = contacts;
+      });
 
-    console.log(this.authService.userDetails);
     const selfEmail = this.authService.userDetails.email;
     if (selfEmail !== null) {
-      const emitter = this.messageService.getMessages(environment.gateway + environment.messagePushApi + '/user/' + encodeURI(selfEmail));
+      const emitter = this.messageService.getMessages(encodeURI(selfEmail));
       emitter.subscribe((data: MessageList) => {
         console.log(data)
         data.messages.forEach(m => {

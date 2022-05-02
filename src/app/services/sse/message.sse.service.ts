@@ -2,6 +2,7 @@ import {Injectable, NgZone} from '@angular/core';
 import {SseService} from "./sse.service";
 import {Observable} from "rxjs";
 import {MessageList} from "../../util/dto";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class MessageSseService {
 
   getMessages(uri: string): Observable<MessageList>{
     return Observable.create((observer: { next: (arg0: MessageList) => void; error: (arg0: Event) => void; }) => {
-      const eventSource = this.sseService.getEventSource(uri);
+      const eventSource = this.sseService.getEventSource(environment.gateway + environment.messagePushApi + '/user/' + uri);
 
       eventSource.onopen= () => {
         console.log("Opening connection.Ready State is %i."+ eventSource.readyState);

@@ -13,26 +13,22 @@ export class ConversationComponent implements OnInit {
 
   @Input() contact!: UserDto;
   @Input() conversation!: MessageInterface[];
-  //messageList!: MessageInterface[];
 
   constructor(private conversationService: ConversationService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    /*this.conversationService.getConversationMessages().subscribe({
-      next: (messages) => {
-        this.messageList = messages;
-      },
-      error: (err) => {
-        this.messageList = [];
-      },
-    });*/
   }
 
   sendMessage(message: string) {
     console.log('Sending message');
-    console.log(message);
     if(this.authService.userDetails.email !== null) {
-      this.conversationService.sendMessage(message, this.authService.userDetails.email, this.contact.email).subscribe();
+      this.conversationService
+        .sendMessage(
+          message,
+          this.authService.userDetails.email,
+          this.contact.email
+        )
+        .subscribe((res) => {console.log(res)});
     }
   }
 
