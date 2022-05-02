@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ConversationService } from 'src/app/services/conversation.service';
-import { ContactInterface, MessageInterface } from 'src/app/util/dto';
+import { MessageInterface } from 'src/app/util/dto';
+import {UserDto} from "../../../util/dto/user-dto";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-conversation',
@@ -9,33 +11,41 @@ import { ContactInterface, MessageInterface } from 'src/app/util/dto';
 })
 export class ConversationComponent implements OnInit {
 
-  @Input() contact!: ContactInterface;
-  messageList!: MessageInterface[];
-  constructor(private conversationService: ConversationService) { }
+  @Input() contact!: UserDto;
+  @Input() conversation!: MessageInterface[];
+  //messageList!: MessageInterface[];
+
+  constructor(private conversationService: ConversationService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.conversationService.getConversationMessages().subscribe({
+    /*this.conversationService.getConversationMessages().subscribe({
       next: (messages) => {
         this.messageList = messages;
       },
       error: (err) => {
         this.messageList = [];
       },
-    });
+    });*/
   }
 
-  sendMessage() {
-    console.log('mensaje');
+  sendMessage(message: string) {
+    console.log('Sending message');
+    console.log(message);
+    if(this.authService.userDetails.email !== null) {
+      this.conversationService.sendMessage(message, this.authService.userDetails.email, this.contact.email).subscribe();
+    }
   }
 
   sendFile(event: any) {
     let fileList: FileList = event.target.files;
     if(fileList.length > 0) {
       let file: File = fileList[0];
-      this.conversationService.sendFile(file, 'testangular').subscribe({
-        next: (data) => console.log(data),
-        error: (error) => console.error(error),
-      });
+      if(this.authService.userDetails.email !== null) {
+        this.conversationService.sendFile(file, this.authService.userDetails.email, this.contact.email).subscribe({
+          next: (data) => console.log(data),
+          error: (error) => console.error(error),
+        });
+      }
     }
   }
 }

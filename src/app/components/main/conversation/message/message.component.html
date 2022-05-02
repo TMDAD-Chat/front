@@ -1,11 +1,11 @@
 <ng-template [ngIf]="isOwnMessage" [ngIfElse]="incommingMessage">
   <div class="d-flex justify-content-end mb-4">
     <div class="msg_cotainer_send">
-      <ng-template [ngIf]="message.messageType === 0">
+      <ng-template [ngIf]="isTextMessage()">
         {{ message.content }}
       </ng-template>
-      <ng-template [ngIf]="message.messageType === 1">
-        <img src="{{ image | async }}" alt="">
+      <ng-template [ngIf]="isFileMessage()">
+        <img class="img_message" src="{{ image | async }}" alt="">
       </ng-template>
       <span class="msg_time_send">{{ message.creationTimestamp | date:'short'}}</span>
     </div>
@@ -23,11 +23,11 @@
         class="rounded-circle user_img_msg">
     </div>
     <div class="msg_cotainer">
-      <ng-template [ngIf]="message.messageType === 0">
+      <ng-template [ngIf]="isTextMessage()">
         {{ message.content }}
       </ng-template>
-      <ng-template [ngIf]="message.messageType === 1"}>
-        <img src="{{ image | async }}" alt="">
+      <ng-template [ngIf]="isFileMessage()">
+        <img class="img_message" src="{{ image | async }}" alt="">
       </ng-template>
       <span class="msg_time">{{ message.creationTimestamp | date:'short' }}</span>
     </div>

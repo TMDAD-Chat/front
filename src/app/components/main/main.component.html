@@ -3,6 +3,6 @@
     <app-chat-list [contactList]="contactList" (selectEvent)="selectContact($event)"></app-chat-list>
   </div>
   <div class="col-md-8 col-xl-6 chat">
-    <app-conversation *ngIf="selectedContact" [contact]="selectedContact"></app-conversation>
+    <app-conversation *ngIf="selectedContact" [contact]="selectedContact" [conversation]="getConversationOfContact(selectedContact)"></app-conversation>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ContactInterface } from 'src/app/util/dto';
+import {UserDto} from "../../../../util/dto/user-dto";
 
 @Component({
   selector: 'app-contact',
@@ -8,7 +8,7 @@ import { ContactInterface } from 'src/app/util/dto';
 })
 export class ContactComponent {
 
-  @Input() contact!: ContactInterface;
+  @Input() contact!: UserDto;
   @Input() active: boolean = false;
 
   constructor() { }

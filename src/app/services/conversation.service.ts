@@ -1,17 +1,16 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Constants } from '../util/constants';
-import { MessageInterface } from '../util/dto';
+import { Observable} from 'rxjs';
+import {HttpService} from "./http.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConversationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private httpService: HttpService) { }
 
-  getConversationMessages(): Observable<MessageInterface[]> {
+  /*getConversationMessages(): Observable<MessageInterface[]> {
     return of([
       {
         messageType: 0,
@@ -44,16 +43,20 @@ export class ConversationService {
         creationTimestamp: new Date()
       }
     ]);
+  }*/
+
+  sendMessage(message: string, sender: string, to: string) : Observable<any> {
+    const body = {
+      content: message,
+      sender: sender
+    }
+    return this.httpService.sendMessage(body, to);
   }
 
-  sendMessage(body: MessageInterface) {
-    return this.http.post(Constants.sendMessageEndpoint, body)
-  }
-
-  sendFile(file: File, chat: string) {
+  sendFile(file: File, from: string, to: string) : Observable<any> {
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    formData.append('chat', chat);
-    return this.http.post(Constants.sendMessageEndpoint, formData);
+    formData.append('sender', from);
+    return this.httpService.sendFile(to, formData);
   }
 }
