@@ -14,4 +14,7 @@ export class HttpService {
     return this.httpClient.get(environment.gateway + environment.messageReceiveApi + "/user/"+encodeURI(loggedUser)+"/conversation/" + encodeURI(otherUser))
   }
 
+  requestOldGlobalMessagesBetween(email: string) {
+    return this.httpClient.get(environment.gateway + environment.messageReceiveApi + "/user/"+encodeURI(email)+"/conversation/global/")
+  }
 }

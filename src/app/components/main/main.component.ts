@@ -14,7 +14,10 @@ import { forkJoin, of, switchMap } from 'rxjs';
 export class MainComponent implements OnInit {
   contactList: UserDto[] = [];
   messages: Map<string, MessageInterface[]> = new Map<string, MessageInterface[]>();
+  globalMessages: MessageInterface[] = [];
+  globalMessagesSelected: boolean = false;
   selectedContact!: UserDto;
+  currentUser!: UserDto;
 
   constructor(
     private messageService: MessageSseService,
@@ -44,30 +47,46 @@ export class MainComponent implements OnInit {
 
     const selfEmail = this.authService.userDetails.email;
     if (selfEmail !== null) {
+      this.contactService.getUser(selfEmail).subscribe(u => this.currentUser = u);
       const emitter = this.messageService.getMessages(encodeURI(selfEmail));
       emitter.subscribe((data: MessageList) => {
         console.log(data)
-        data.messages.forEach(m => {
-          let conversationEmail = m.sender;
-          if(m.sender == selfEmail){
-            conversationEmail = data.recipient;
-          }
-          console.log("Saved message to %s", conversationEmail)
-          let messageEntry = this.messages.get(conversationEmail);
-          if(messageEntry === undefined){
-            messageEntry = [];
-          }
-          let foundWithSameId = false;
-          messageEntry.forEach(savedMsg => {
-            foundWithSameId ||= savedMsg.id == m.id;
-          })
+        if(this.isMessageForUser(data)) {
+          data.messages.forEach(m => {
+            let conversationEmail = m.sender;
+            if (m.sender == selfEmail) {
+              conversationEmail = data.recipient;
+            }
+            console.log("Saved message to %s", conversationEmail)
+            let messageEntry = this.messages.get(conversationEmail);
+            if (messageEntry === undefined) {
+              messageEntry = [];
+            }
+            let foundWithSameId = false;
+            messageEntry.forEach(savedMsg => {
+              foundWithSameId ||= savedMsg.id == m.id;
+            })
 
-          if(!foundWithSameId) {
-            messageEntry.push(m);
-            messageEntry.sort((a, b) => a.creationTimestamp > b.creationTimestamp ? 1 : -1);
-            this.messages.set(conversationEmail, messageEntry);
-          }
-        })
+            if (!foundWithSameId) {
+              messageEntry.push(m);
+              messageEntry.sort((a, b) => a.creationTimestamp > b.creationTimestamp ? 1 : -1);
+              this.messages.set(conversationEmail, messageEntry);
+            }
+          })
+        }else if(this.isMessageForAllUsers(data)){
+          data.messages.forEach(m => {
+            console.log("Saved global message")
+            let foundWithSameId = false;
+            this.globalMessages.forEach(savedMsg => {
+              foundWithSameId ||= savedMsg.id == m.id;
+            })
+
+            if (!foundWithSameId) {
+              this.globalMessages.push(m);
+              this.globalMessages.sort((a, b) => a.creationTimestamp > b.creationTimestamp ? 1 : -1);
+            }
+          })
+        }
       })
     }else{
       return;
@@ -82,6 +101,7 @@ export class MainComponent implements OnInit {
         this.httpService.requestOldMessagesBetween(this.authService.userDetails.email, selected.email).subscribe();
     }
     console.log("Selected new contact: %s", selected.email)
+    this.globalMessagesSelected = false;
   }
 
   getConversationOfContact(selectedContact: UserDto) : MessageInterface[] {
@@ -92,5 +112,22 @@ export class MainComponent implements OnInit {
       messages = [];
     }
     return messages;
+  }
+
+  isMessageForUser(m: MessageList) : boolean {
+    return m.recipientType as unknown as string == "USER";
+  }
+
+  isMessageForAllUsers(m: MessageList) : boolean {
+    return m.recipientType as unknown as string == "GLOBAL";
+  }
+
+  selectGlobalMessages() {
+    const messages = this.globalMessages
+    if((messages == undefined || messages.length < 10) && this.authService.userDetails.email !== null){
+      this.httpService.requestOldGlobalMessagesBetween(this.authService.userDetails.email).subscribe();
+    }
+    console.log("Selected global messages")
+    this.globalMessagesSelected = true;
   }
 }

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as $ from 'jquery';
 import { AuthService } from 'src/app/services/auth.service';
-import {UserDto} from "../../../util/dto/user-dto";
+import {UserDto} from "../../../util/dto";
 
 @Component({
   selector: 'app-chat-list',
@@ -13,6 +13,7 @@ export class ChatListComponent implements OnInit{
   @Input() contactList: UserDto[] = [];
   selected!: number;
   @Output() selectEvent = new EventEmitter<UserDto>();
+  @Output() globalMessagesEvent = new EventEmitter<VoidFunction>();
 
   constructor(public authService: AuthService) { }
 
@@ -38,5 +39,10 @@ export class ChatListComponent implements OnInit{
   logout() {
     console.log("Logout user");
     this.authService.logout();
+  }
+
+  seeGlobalMessages() {
+    this.selected = -1;
+    this.globalMessagesEvent.emit();
   }
 }

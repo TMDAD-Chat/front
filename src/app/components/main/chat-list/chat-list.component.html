@@ -27,6 +27,17 @@
   </div>
   <div class="card-body contacts_body">
     <ul class="contacts">
+      <li [ngClass]="{'active': selected < 0}"
+          (click)="seeGlobalMessages()">
+        <div class="d-flex bd-highlight">
+          <div class="img_cont">
+            <img src="/assets/bullhorn-icon.svg" class="rounded-circle user_img" />
+          </div>
+          <div class="user_info">
+            <span>See global messages</span>
+          </div>
+        </div>
+      </li>
       <li *ngFor="let contact of contactList; let i = index"
         [ngClass]="{'active': i === selected}"
         (click)="selectContact(i)">
