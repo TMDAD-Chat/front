@@ -1,7 +1,7 @@
 import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Constants } from '../util/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +15,13 @@ export class ConversationService {
       content: message,
       sender: sender
     }
-    return this.http.post<any>(environment.gateway + environment.messageReceiveApi + "/user/" + encodeURI(to) + "/message", body);
+    return this.http.post<any>(Constants.sendMessageEndpoint(encodeURI(to)), body);
   }
 
   sendFile(file: File, from: string, to: string) : Observable<any> {
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
     formData.append('sender', from);
-    return this.http.post<any>(environment.gateway + environment.messageReceiveApi + "/user/" + encodeURI(to) + "/file", formData);
+    return this.http.post<any>(Constants.sendFileEndpoint(encodeURI(to)), formData);
   }
 }

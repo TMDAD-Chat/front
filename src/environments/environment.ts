@@ -5,10 +5,7 @@
 export const environment = {
   production: false,
   gateway: "http://localhost:8000",
-  messagePushApi: '/v1/messagepush',
   messageReceiveApi: '/v1/messagereceive',
-  userApi: '/v1/user',
-  fileApi: '/v1/file',
   firebase: {
     apiKey: "AIzaSyCt9SroQN6JI9stZr3i6k9MPgfwurJw1Qg",
     authDomain: "tmdad-chat-app.firebaseapp.com",

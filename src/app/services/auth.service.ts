@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { firstValueFrom, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../util/dto/user';
-import { environment } from 'src/environments/environment';
+import { Constants } from '../util/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -50,10 +50,7 @@ export class AuthService {
 
   registerUser(user: User) {
     return this.httpClient.put<User>(
-      environment.gateway +
-        environment.userApi +
-        '/user/' +
-        encodeURI(user.email),
+      Constants.getOrCreateUserEnpoint(encodeURI(user.email)),
       user
     );
   }
