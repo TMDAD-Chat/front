@@ -27,6 +27,20 @@
   width: 70px;
   border:1.5px solid #f5f6fa;
 }
+
+.user_info{
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 15px;
+}
+.user_info span{
+  font-size: 20px;
+  color: white;
+}
+.user_info p{
+  font-size: 10px;
+  color: rgba(255,255,255,0.6);
+}
 .search{
   border-radius: 15px 0 0 15px !important;
   background-color: rgba(0,0,0,0.3) !important;

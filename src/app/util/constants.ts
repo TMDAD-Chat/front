@@ -11,12 +11,18 @@ export class Constants {
     `${this.messageReceiveApi}/user/${email}/message`;
   public static sendFileEndpoint = (email: string) =>
     `${this.messageReceiveApi}/user/${email}/message`;
-  public static readonly conversationsListEndpoint = (email: string) =>
+  public static conversationsListEndpoint = (email: string) =>
     `${this.messageReceiveApi}/user/${email}/conversations`;
+  public static getoldConversationMessagesEndpoint = (
+    loggedUser: string,
+    otherUser: string
+  ) => `${this.messageReceiveApi}/user/${loggedUser}/conversation/${otherUser}`;
+  public static getOldGlobalMessagesEndpoint = (loggedUser: string) =>
+    `${this.messageReceiveApi}/user/${loggedUser}/conversation/global/`;
   //#endregion
 
   public static readonly userApi = `${environment.gateway}/v1/user`;
-  public static readonly getOrCreateUserEnpoint = (email: string) =>
+  public static getOrCreateUserEnpoint = (email: string) =>
     `${this.userApi}/user/${email}`;
 
   public static readonly defaultImage =

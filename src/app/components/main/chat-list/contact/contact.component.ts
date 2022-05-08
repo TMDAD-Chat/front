@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {UserDto} from "../../../../util/dto/user-dto";
+import {UserDto} from "../../../../util/dto";
 
 @Component({
   selector: 'app-contact',
