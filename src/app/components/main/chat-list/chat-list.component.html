@@ -12,7 +12,7 @@
           <i class="fas fa-search"></i>
         </span>
       </div>
-  
+
       <span id="action_menu_btn" class="p-2">
         <i class="fas fa-ellipsis-v"></i>
       </span>
@@ -20,6 +20,7 @@
         <ul>
           <li (click)="addContact()"><i class="fas fa-users"></i> Add friend</li>
           <li (click)="createGroup()"><i class="fas fa-plus"></i> Create group</li>
+          <li (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i> Log out</li>
         </ul>
       </div>
     </div>
@@ -27,7 +28,7 @@
   <div class="card-body contacts_body">
     <ul class="contacts">
       <li *ngFor="let contact of contactList; let i = index"
-        [ngClass]="{'active': i === selected}" 
+        [ngClass]="{'active': i === selected}"
         (click)="selectContact(i)">
         <app-contact [contact]="contact">
         </app-contact>

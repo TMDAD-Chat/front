@@ -9,25 +9,25 @@
       </div>
       <div class="user_info">
         <span>{{ contact.name }}</span>
-        <p>{{ messageList.length }} Messages</p>
+        <p>{{ conversation.length }} Messages</p>
       </div>
     </div>
   </div>
   <div class="card-body msg_card_body">
-    <ng-container *ngFor="let message of messageList">
-      <app-message [message]="message"></app-message>
+    <ng-container *ngFor="let message of conversation">
+      <app-message [message]="message" [isOwnMessage]="message.sender !== contact.email"></app-message>
     </ng-container>
   </div>
-  
+
   <div class="card-footer">
     <form class="input-group">
       <label for="file-upload" class="input-group-text attach_btn">
         <i class="fas fa-paperclip"></i>
       </label>
       <input id="file-upload" type="file" (change)="sendFile($event)" accept=".jpg, .png,.pdf,.doc,.docx">
-      <textarea class="form-control type_msg" placeholder="Type your message...">
+      <textarea class="form-control type_msg" placeholder="Type your message..." #messageBox>
       </textarea>
-      <span class="input-group-text send_btn" (click)="sendMessage()">
+      <span class="input-group-text send_btn" (click)="sendMessage(messageBox.value)">
         <i class="fas fa-location-arrow"></i>
       </span>
     </form>

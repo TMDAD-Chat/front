@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import {HttpService} from "../../../services/http.service";
 
 @Component({
   selector: 'app-login',
@@ -9,15 +10,17 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private httpService: HttpService) { }
 
   signInWithGoogle() {
     this.authService
       .signInWithGoogle()
-      .then(() => {
-        setTimeout(() => {
-          this.router.navigate(["/"]);
-        }, 1000);
+      .then((value) => {
+        if(value) {
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 1000);
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -1,35 +1,33 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import {Injectable} from '@angular/core';
+import { Observable, of} from 'rxjs';
+import {AuthService} from "./auth.service";
+import {ConversationsDto} from "../util/dto/conversations-dto";
+import { HttpClient } from '@angular/common/http';
+import { UserDto } from '../util/dto';
 import { Constants } from '../util/constants';
-import { ContactInterface } from '../util/dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient, private auth: AuthService) { }
 
-  getContacts(): Observable<ContactInterface[]> {
-    return of([
-      {
-        name: 'Contact',
-        email: 'contact@email.com',
-        photo: Constants.defaultImage,
-        status: 'offline',
-      },
-      {
-        name: 'Contact2',
-        email: 'contact@email.com',
-        photo: Constants.defaultImage,
-        status: 'offline',
-      },
-      {
-        name: 'Contact3',
-        email: 'contact@email.com',
-        photo: Constants.defaultImage,
-        status: 'offline',
-      },
-    ]);
+  getConversations(): Observable<ConversationsDto | undefined> {
+    if(this.auth.userDetails.email !== null) {
+      return this.httpClient.get<ConversationsDto>(
+        Constants.conversationsListEndpoint(
+          encodeURI(this.auth.userDetails.email)
+        )
+      );
+    }else{
+      return of(undefined);
+    }
+  }
+
+  getUser(mail: string): Observable<UserDto> {
+    return this.httpClient.get<UserDto>(
+      Constants.getOrCreateUserEnpoint(encodeURI(mail))
+    );
   }
 }

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ContactInterface } from 'src/app/util/dto';
 import * as $ from 'jquery';
 import { AuthService } from 'src/app/services/auth.service';
+import {UserDto} from "../../../util/dto/user-dto";
 
 @Component({
   selector: 'app-chat-list',
@@ -10,9 +10,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ChatListComponent implements OnInit{
 
-  @Input() contactList: ContactInterface[] = [];
+  @Input() contactList: UserDto[] = [];
   selected!: number;
-  @Output() selectEvent = new EventEmitter<ContactInterface>();
+  @Output() selectEvent = new EventEmitter<UserDto>();
 
   constructor(public authService: AuthService) { }
 
@@ -33,5 +33,10 @@ export class ChatListComponent implements OnInit{
 
   createGroup() {
     console.log('crear grupo');
+  }
+
+  logout() {
+    console.log("Logout user");
+    this.authService.logout();
   }
 }
