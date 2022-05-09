@@ -24,4 +24,8 @@ export class HttpService {
       Constants.getOldGlobalMessagesEndpoint(encodeURI(email))
     );
   }
+
+  requestOldRoomMessagesIn(id: number, email: string) {
+    return this.httpClient.get(environment.gateway + environment.messageReceiveApi + "/room/"+id+"/conversation/" + encodeURI(email))
+  }
 }

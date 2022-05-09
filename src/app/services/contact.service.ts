@@ -4,6 +4,7 @@ import {AuthService} from "./auth.service";
 import {ConversationsDto} from "../util/dto/conversations-dto";
 import { HttpClient } from '@angular/common/http';
 import { UserDto } from '../util/dto';
+import {RoomDto} from "../util/dto/room-dto";
 import { Constants } from '../util/constants';
 
 @Injectable({
@@ -28,6 +29,12 @@ export class ContactService {
   getUser(mail: string): Observable<UserDto> {
     return this.httpClient.get<UserDto>(
       Constants.getOrCreateUserEnpoint(encodeURI(mail))
+    );
+  }
+
+  getRoomInformation(roomId: number) : Observable<RoomDto> {
+    return this.httpClient.get<RoomDto>(
+      environment.gateway + environment.userApi + '/room/' + roomId
     );
   }
 }

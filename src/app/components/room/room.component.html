@@ -1,0 +1,10 @@
+<div class="d-flex justify-content-center">
+  <div class="col-md-4 col-xl-3 chat">
+    <app-room-chat-list
+      [participants]="connectedRoom !== undefined && connectedRoom.users !== undefined ? connectedRoom.users : []"
+      [owner]="connectedRoom !== undefined ? connectedRoom.owner : undefined"></app-room-chat-list>
+  </div>
+  <div class="col-md-8 col-xl-6 chat">
+    <app-room-conversation *ngIf="this.messages !== undefined" [room]="connectedRoom" [conversation]="this.messages" [currentUser]="ownUser"></app-room-conversation>
+  </div>
+</div>

@@ -18,6 +18,11 @@ import {GlobalConversationComponent} from "./conversation/global/global.conversa
     MessageComponent,
     MainComponent,
   ],
-  imports: [CommonModule, MainRoutingModule],
+  exports: [
+    ContactComponent,
+    ConversationComponent,
+    MessageComponent
+  ],
+  imports: [CommonModule, MainRoutingModule]
 })
 export class MainModule {}
