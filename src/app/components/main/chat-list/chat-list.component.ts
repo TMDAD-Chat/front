@@ -1,22 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output,  } from '@angular/core';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserDto } from '../../../util/dto';
+import { AddContactComponent } from './add-contact/add-contact.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 
 @Component({
   selector: 'app-chat-list',
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.css'],
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent {
   @Input() contactList: UserDto[] = [];
   selected!: number;
   @Output() selectEvent = new EventEmitter<UserDto>();
   @Output() globalMessagesEvent = new EventEmitter<VoidFunction>();
+  modalRef?: BsModalRef;
 
-  constructor(public authService: AuthService, private router: Router) {}
-
-  ngOnInit(): void {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private modalService: BsModalService
+  ) {}
 
   selectContact(index: number) {
     this.selected = index;
@@ -24,11 +30,11 @@ export class ChatListComponent implements OnInit {
   }
 
   addContact() {
-    console.log('añadir contacto');
+    this.modalRef = this.modalService.show(AddContactComponent);
   }
 
   createGroup() {
-    console.log('crear grupo');
+    this.modalRef = this.modalService.show(CreateGroupComponent);
   }
 
   logout() {
