@@ -1,27 +1,22 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import * as $ from 'jquery';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import {UserDto} from "../../../util/dto";
+import { UserDto } from '../../../util/dto';
 
 @Component({
   selector: 'app-chat-list',
   templateUrl: './chat-list.component.html',
-  styleUrls: ['./chat-list.component.css']
+  styleUrls: ['./chat-list.component.css'],
 })
-export class ChatListComponent implements OnInit{
-
+export class ChatListComponent implements OnInit {
   @Input() contactList: UserDto[] = [];
   selected!: number;
   @Output() selectEvent = new EventEmitter<UserDto>();
   @Output() globalMessagesEvent = new EventEmitter<VoidFunction>();
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    $('#action_menu_btn').click(function(){
-      $('.action_menu').toggle();
-    });
-  }
+  ngOnInit(): void {}
 
   selectContact(index: number) {
     this.selected = index;
@@ -37,8 +32,8 @@ export class ChatListComponent implements OnInit{
   }
 
   logout() {
-    console.log("Logout user");
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   seeGlobalMessages() {

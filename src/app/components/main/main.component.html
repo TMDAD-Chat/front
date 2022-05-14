@@ -1,9 +1,21 @@
 <div class="d-flex justify-content-center">
   <div class="col-md-4 col-xl-3 chat">
-    <app-chat-list [contactList]="contactList" (selectEvent)="selectContact($event)" (globalMessagesEvent)="selectGlobalMessages()"></app-chat-list>
+    <app-chat-list
+      [contactList]="contactList"
+      (selectEvent)="selectContact($event)"
+      (globalMessagesEvent)="selectGlobalMessages()"
+    ></app-chat-list>
   </div>
-  <div class="col-md-8 col-xl-6 chat">
-    <app-conversation *ngIf="!globalMessagesSelected && selectedContact" [contact]="selectedContact" [conversation]="getConversationOfContact(selectedContact)"></app-conversation>
-    <app-global-conversation *ngIf="globalMessagesSelected" [currentUser]="currentUser" [conversation]="this.globalMessages"></app-global-conversation>
+  <div class="col-md-7 col-xl-6 chat">
+    <app-conversation
+      *ngIf="!globalMessagesSelected && selectedContact"
+      [contact]="selectedContact"
+      [conversation]="getConversationOfContact(selectedContact)"
+    ></app-conversation>
+    <app-global-conversation
+      *ngIf="globalMessagesSelected"
+      [currentUser]="currentUser"
+      [conversation]="this.globalMessages"
+    ></app-global-conversation>
   </div>
 </div>
