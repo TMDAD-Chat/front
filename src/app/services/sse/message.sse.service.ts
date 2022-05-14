@@ -40,6 +40,8 @@ export class MessageSseService {
   }
 
   getRoomMessages(roomId: number, userEmail: string) {
-    return this.buildMessageObservable(environment.gateway + environment.messagePushApi + '/room/' + roomId + '/messages/' + encodeURI(userEmail));
+    return this.buildMessageObservable(
+      Constants.getRoomEventsEnpoint(roomId, encodeURI(userEmail))
+    );
   }
 }

@@ -34,7 +34,7 @@ export class ContactService {
 
   getRoomInformation(roomId: number) : Observable<RoomDto> {
     return this.httpClient.get<RoomDto>(
-      environment.gateway + environment.userApi + '/room/' + roomId
+      Constants.getRoomInfoEndpoint(roomId)
     );
   }
 }

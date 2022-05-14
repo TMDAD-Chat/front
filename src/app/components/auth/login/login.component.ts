@@ -19,7 +19,7 @@ export class LoginComponent {
         if(value) {
           setTimeout(() => {
             this.router.navigate(['/']);
-          }, 1000);
+          }, 10);
         }
       })
       .catch((err) => {

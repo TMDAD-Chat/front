@@ -26,6 +26,6 @@ export class HttpService {
   }
 
   requestOldRoomMessagesIn(id: number, email: string) {
-    return this.httpClient.get(environment.gateway + environment.messageReceiveApi + "/room/"+id+"/conversation/" + encodeURI(email))
+    return this.httpClient.get(Constants.getOldRoomMessagesEndpoint(id, encodeURI(email)))
   }
 }
