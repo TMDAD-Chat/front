@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
@@ -30,6 +31,7 @@ import { CreateGroupComponent } from './chat-list/create-group/create-group.comp
     MainRoutingModule,
     ModalModule.forChild(),
     BsDropdownModule,
+    FormsModule
   ],
   exports: [
     ContactComponent,

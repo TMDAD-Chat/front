@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Subject } from 'rxjs';
+import { ContactService } from 'src/app/services/contact.service';
+import { UserDto } from 'src/app/util/dto';
 
 @Component({
   selector: 'app-add-contact',
@@ -8,10 +11,17 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class AddContactComponent {
 
-  constructor(public bsModalRef: BsModalRef) { }
+  contactEmail: string = "";
+  public onClose: Subject<UserDto>;
+  constructor(public bsModalRef: BsModalRef, private contactService: ContactService) { 
+    this.onClose = new Subject();
+  }
 
 
   addContact() {
-    // TODO: crear conversación con contacto
+    this.contactService.addContact(this.contactEmail).subscribe((contact) => {
+      this.onClose.next(contact);
+      this.bsModalRef.hide();
+    });
   }
 }

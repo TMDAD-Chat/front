@@ -31,6 +31,9 @@ export class ChatListComponent {
 
   addContact() {
     this.modalRef = this.modalService.show(AddContactComponent);
+    this.modalRef.content.onClose.subscribe((contact: UserDto) => {
+      this.contactList.unshift(contact);
+    });
   }
 
   createGroup() {
