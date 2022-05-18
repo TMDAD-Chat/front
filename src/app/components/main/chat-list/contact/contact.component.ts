@@ -10,6 +10,7 @@ export class ContactComponent {
 
   @Input() contact!: UserDto;
   @Input() active: boolean = false;
+  @Input() status: string | undefined;
 
   constructor() { }
 

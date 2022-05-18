@@ -24,4 +24,19 @@ export class ConversationService {
     formData.append('sender', from);
     return this.http.post<any>(Constants.sendFileEndpoint(encodeURI(to)), formData);
   }
+
+  sendMessageToRoom(id: number, sender: string, message: string) {
+    const body = {
+      content: message,
+      sender: sender
+    }
+    return this.http.post<any>(Constants.sendMessageRoomEndpoint(id), body);
+  }
+
+  sendFileToRoom(id: number, file: File, from: string) : Observable<any> {
+    let formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('sender', from);
+    return this.http.post<any>(Constants.sendFileRoomEndpoint(id), formData);
+  }
 }

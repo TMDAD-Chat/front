@@ -11,14 +11,13 @@ export class MessageSseService {
 
   constructor(private zone: NgZone, private sseService: SseService) { }
 
-  getMessages(email: string): Observable<MessageList>{
+  private buildMessageObservable(finalUri: string): Observable<MessageList> {
     return Observable.create((observer: { next: (arg0: MessageList) => void; error: (arg0: Event) => void; }) => {
-      const eventSource = this.sseService.getEventSource(Constants.getEventsEnpoint(email));
+      const eventSource = this.sseService.getEventSource(finalUri);
 
       eventSource.onopen= () => {
         console.log("Opening connection.Ready State is %i."+ eventSource.readyState);
       }
-
 
       eventSource.onmessage = ev => {
         console.log("New message received: {}.", ev.data)
@@ -34,5 +33,15 @@ export class MessageSseService {
         })
       }
     })
+  }
+
+  getMessages(userEmail: string): Observable<MessageList>{
+    return this.buildMessageObservable(Constants.getEventsEnpoint(userEmail));
+  }
+
+  getRoomMessages(roomId: number, userEmail: string) {
+    return this.buildMessageObservable(
+      Constants.getRoomEventsEnpoint(roomId, encodeURI(userEmail))
+    );
   }
 }

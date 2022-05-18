@@ -24,4 +24,8 @@ export class HttpService {
       Constants.getOldGlobalMessagesEndpoint(encodeURI(email))
     );
   }
+
+  requestOldRoomMessagesIn(id: number, email: string) {
+    return this.httpClient.get(Constants.getOldRoomMessagesEndpoint(id, encodeURI(email)))
+  }
 }

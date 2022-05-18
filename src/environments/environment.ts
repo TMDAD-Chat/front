@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  gateway: "http://localhost:8000",
+  gateway: "https://gateway:8443",
   messageReceiveApi: '/v1/messagereceive',
   firebase: {
     apiKey: "AIzaSyCt9SroQN6JI9stZr3i6k9MPgfwurJw1Qg",
