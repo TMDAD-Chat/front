@@ -7,20 +7,16 @@
 
     <div class="d-flex justify-content-between">
       <div class="input-group">
-        <input type="text" placeholder="Search..." class="form-control search" />
-        <span class="input-group-text search_btn">
-          <i class="fas fa-search"></i>
-        </span>
       </div>
 
-      <span id="action_menu_btn" class="p-2">
-        <i class="fas fa-ellipsis-v"></i>
-      </span>
-      <div class="action_menu">
-        <ul>
+      <div class="dropdown" dropdown>
+        <a id="action_menu_btn" class="p-2" dropdownToggle>
+          <i class="fas fa-ellipsis-v"></i>
+        </a>
+        <ul class="action_menu dropdown-menu" *dropdownMenu>
           <li (click)="addContact()"><i class="fas fa-users"></i> Add friend</li>
-          <li (click)="createGroup()"><i class="fas fa-plus"></i> Create group</li>
-          <li (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i> Log out</li>
+          <li (click)="return()"><i class="fas fa-arrow-left"></i> Return to contacts</li>
+          <li (click)="logout()"><i class="fas fa-sign-out-alt"></i> Log out</li>
         </ul>
       </div>
     </div>

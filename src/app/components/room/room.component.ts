@@ -4,9 +4,10 @@ import { ContactService } from 'src/app/services/contact.service';
 import { MessageSseService } from 'src/app/services/sse/message.sse.service';
 import { MessageInterface, MessageList, UserDto } from 'src/app/util/dto';
 import {HttpService} from "../../services/http.service";
-import { forkJoin, of, switchMap } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import {ActivatedRoute, Router} from "@angular/router";
 import {RoomDto} from "../../util/dto/room-dto";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-main',
@@ -24,6 +25,7 @@ export class RoomComponent implements OnInit {
     private authService: AuthService,
     private contactService: ContactService,
     private httpService: HttpService,
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -41,9 +43,8 @@ export class RoomComponent implements OnInit {
         }else{
           return of(null);
         }
-        })
-      ).pipe(
-        switchMap((room, _) => {
+        }),
+        switchMap((room) => {
         if(room !== null) {
           this.connectedRoom = room;
           console.log(this.connectedRoom);
@@ -62,7 +63,8 @@ export class RoomComponent implements OnInit {
           return of(null);
         }
         })
-      ).subscribe((data: MessageList | null) => {
+      ).subscribe({
+        next: (data: MessageList | null) => {
         if(data === null){
           return;
         }
@@ -82,20 +84,26 @@ export class RoomComponent implements OnInit {
             }
           })
         }
+        },
+        error: () => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Room not found',
+            icon: 'error',
+            confirmButtonText: 'Cool',
+          });
+          this.router.navigate(['/']);
+        }
       })
       this.contactService.getUser(selfEmail).subscribe(u => this.currentUser = u);
     }
   }
 
-  selectContact(selected: UserDto) {
-
-  }
-
-  getConversationOfContact(selectedContact: UserDto) : MessageInterface[] {
-    return this.messages;
-  }
-
   isMessageForRoom(m: MessageList) : boolean {
     return m.recipientType as unknown as string == "ROOM";
+  }
+
+  roomUpdate(update: RoomDto) {
+    this.connectedRoom.users = update.users;
   }
 }

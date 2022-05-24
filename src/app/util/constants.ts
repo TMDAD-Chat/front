@@ -39,6 +39,8 @@ export class Constants {
     `${this.userApi}/user/${email}/contacts/${contactEmail}`;
   public static conversationsListEndpoint = (email: string) =>
     `${this.userApi}/user/${email}/contacts`;
+  public static addUserToRoomEndpoint = (roomId: number, userEmail: string) =>
+    `${this.userApi}/room/${roomId}/user/${userEmail}`;
   //#endregion
 
   public static readonly defaultImage =

@@ -51,4 +51,13 @@ export class ContactService {
       Constants.getRoomInfoEndpoint(roomId)
     );
   }
+
+  addGroupMember(roomId: number, userEmail: string) {
+    let formData: FormData = new FormData();
+    formData.append('owner', this.auth.userDetails.email || "");
+    return this.httpClient.put<RoomDto>(
+      Constants.addUserToRoomEndpoint(roomId, userEmail),
+      formData
+    );
+  }
 }
