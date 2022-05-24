@@ -3,6 +3,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { ContactService } from 'src/app/services/contact.service';
 import { UserDto } from 'src/app/util/dto';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-contact',
@@ -19,9 +20,19 @@ export class AddContactComponent {
 
 
   addContact() {
-    this.contactService.addContact(this.contactEmail).subscribe((contact) => {
-      this.onClose.next(contact);
-      this.bsModalRef.hide();
+    this.contactService.addContact(this.contactEmail).subscribe({
+      next: (contact) => {
+        this.onClose.next(contact);
+        this.bsModalRef.hide();
+      },
+      error: () => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'User not found',
+          icon: 'error',
+          confirmButtonText: 'Cool',
+        });
+      },
     });
   }
 }
