@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ContactService } from 'src/app/services/contact.service';
 import { MessageSseService } from 'src/app/services/sse/message.sse.service';
 import { MessageInterface, MessageList, UserDto } from 'src/app/util/dto';
 import {HttpService} from "../../services/http.service";
-import { forkJoin, of, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   contactList: UserDto[] = [];
   messages: Map<string, MessageInterface[]> = new Map<string, MessageInterface[]>();
   globalMessages: MessageInterface[] = [];
   globalMessagesSelected: boolean = false;
   selectedContact!: UserDto;
   currentUser!: UserDto;
+  conversationsSubs!: Subscription;
 
   constructor(
     private messageService: MessageSseService,
@@ -28,19 +29,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.contactList = [];
-    const conversations = this.contactService.getConversations();
-    conversations
-      .pipe(
-        switchMap((conversations) => {
-          if (conversations !== undefined) {
-            const userReq = conversations.conversations.map((c) =>
-              this.contactService.getUser(c.sender)
-            );
-            // TODO: obtener la información de los contactos desde la primer petición
-            return forkJoin(userReq);
-          } else return of([]);
-        })
-      )
+    this.conversationsSubs = this.contactService.getConversations()
       .subscribe((contacts) => {
         this.contactList = contacts;
       });
@@ -129,5 +118,11 @@ export class MainComponent implements OnInit {
     }
     console.log("Selected global messages")
     this.globalMessagesSelected = true;
+  }
+
+  ngOnDestroy(): void {
+    if (!!this.conversationsSubs) {
+      this.conversationsSubs.unsubscribe();
+    }
   }
 }

@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Create Group</h4>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef?.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="subject">Group Subject</label>
+      <input id="subject" type="text" class="form-control" placeholder="Group Subject">
+    </div>
+
+    <div class="form-group">
+      <label for="">Gropu members</label>
+      <select name="" id="" class="form-control">
+        <option value="">Select contacts</option>
+      </select>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-success" (click)="createGroup()">Create</button>
+  <button class="btn btn-secondary" (click)="bsModalRef?.hide()">Cancel</button>
+</div>

@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import { Observable, of} from 'rxjs';
 import {AuthService} from "./auth.service";
-import {ConversationsDto} from "../util/dto/conversations-dto";
 import { HttpClient } from '@angular/common/http';
 import { UserDto } from '../util/dto';
 import {RoomDto} from "../util/dto/room-dto";
@@ -14,21 +13,29 @@ export class ContactService {
 
   constructor(private httpClient: HttpClient, private auth: AuthService) { }
 
-  getConversations(): Observable<ConversationsDto | undefined> {
+  getConversations(): Observable<UserDto[]> {
     if(this.auth.userDetails.email !== null) {
-      return this.httpClient.get<ConversationsDto>(
+      return this.httpClient.get<UserDto[]>(
         Constants.conversationsListEndpoint(
           encodeURI(this.auth.userDetails.email)
         )
       );
     }else{
-      return of(undefined);
+      return of([]);
     }
   }
 
   getUser(mail: string): Observable<UserDto> {
     return this.httpClient.get<UserDto>(
       Constants.getOrCreateUserEnpoint(encodeURI(mail))
+    );
+  }
+
+  addContact(contactEmail: string) {
+    const ownEmail = this.auth.userDetails.email || '';
+    return this.httpClient.put<UserDto>(
+      Constants.addContactEndpoint(ownEmail, contactEmail),
+      null
     );
   }
 

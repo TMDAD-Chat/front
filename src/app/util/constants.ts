@@ -12,13 +12,11 @@ export class Constants {
   public static sendMessageEndpoint = (email: string) =>
     `${this.messageReceiveApi}/user/${email}/message`;
   public static sendFileEndpoint = (email: string) =>
-    `${this.messageReceiveApi}/user/${email}/message`;
+    `${this.messageReceiveApi}/user/${email}/file`;
   public static sendMessageRoomEndpoint = (roomId: number) =>
     `${this.messageReceiveApi}/room/${roomId}/message`;
   public static sendFileRoomEndpoint = (roomId: number) =>
     `${this.messageReceiveApi}/room/${roomId}/file`;
-  public static conversationsListEndpoint = (email: string) =>
-    `${this.messageReceiveApi}/user/${email}/conversations`;
   public static getoldConversationMessagesEndpoint = (
     loggedUser: string,
     otherUser: string
@@ -34,6 +32,10 @@ export class Constants {
     `${this.userApi}/user/${email}`;
   public static getRoomInfoEndpoint = (roomId: number) =>
     `${this.userApi}/room/${roomId}`;
+  public static addContactEndpoint = (email: string, contactEmail: string) =>
+    `${this.userApi}/user/${email}/contacts/${contactEmail}`;
+  public static conversationsListEndpoint = (email: string) =>
+    `${this.userApi}/user/${email}/contacts`;
 
   public static readonly defaultImage =
     'https://therichpost.com/wp-content/uploads/2020/06/avatar2.png';
