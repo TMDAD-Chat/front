@@ -39,6 +39,13 @@ export class ContactService {
     );
   }
 
+  createGroup(roomName: string) {
+    return this.httpClient.post<RoomDto>(
+      Constants.createRoomEndpoint(this.auth.userDetails.email || ''),
+      { roomName }
+    );
+  }
+
   getRoomInformation(roomId: number) : Observable<RoomDto> {
     return this.httpClient.get<RoomDto>(
       Constants.getRoomInfoEndpoint(roomId)

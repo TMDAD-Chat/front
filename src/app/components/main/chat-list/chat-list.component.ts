@@ -38,6 +38,9 @@ export class ChatListComponent {
 
   createGroup() {
     this.modalRef = this.modalService.show(CreateGroupComponent);
+    this.modalRef.content.onClose.subscribe((roomId: number) => {
+      this.router.navigate([`/room/${roomId}`]);
+    });
   }
 
   logout() {
