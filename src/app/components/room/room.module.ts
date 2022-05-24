@@ -10,6 +10,8 @@ import { AddChatMemberComponent } from './chat-list/add-chat-member/add-chat-mem
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
+import { RoomListComponent } from './room-list/room-list.component';
+import { RoomDetailComponent } from './room-list/room-detail/room-detail.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { FormsModule } from '@angular/forms';
     RoomConversationComponent,
     RoomComponent,
     AddChatMemberComponent,
+    RoomListComponent,
+    RoomDetailComponent,
   ],
   imports: [
     CommonModule,

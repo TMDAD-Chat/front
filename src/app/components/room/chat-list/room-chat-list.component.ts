@@ -34,7 +34,7 @@ export class RoomChatListComponent {
   }
 
   return() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/room']);
   }
 
   logout() {

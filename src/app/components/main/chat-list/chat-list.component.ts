@@ -52,4 +52,8 @@ export class ChatListComponent {
     this.selected = -1;
     this.globalMessagesEvent.emit();
   }
+
+  goToRooms() {
+    this.router.navigate(['/room']);
+  }
 }

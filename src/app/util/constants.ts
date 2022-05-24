@@ -41,6 +41,8 @@ export class Constants {
     `${this.userApi}/user/${email}/contacts`;
   public static addUserToRoomEndpoint = (roomId: number, userEmail: string) =>
     `${this.userApi}/room/${roomId}/user/${userEmail}`;
+  public static getRoomListEndpoint = (email: string) =>
+    `${this.userApi}/room/list/${email}`;
   //#endregion
 
   public static readonly defaultImage =
