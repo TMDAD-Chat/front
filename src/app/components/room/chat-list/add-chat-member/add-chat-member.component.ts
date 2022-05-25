@@ -2,27 +2,28 @@ import { Component } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { ContactService } from 'src/app/services/contact.service';
-import { UserDto } from 'src/app/util/dto';
+import { RoomDto } from 'src/app/util/dto/room-dto';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-add-contact',
-  templateUrl: './add-contact.component.html',
-  styleUrls: ['./add-contact.component.css']
+  selector: 'app-add-chat-member',
+  templateUrl: './add-chat-member.component.html',
+  styleUrls: ['./add-chat-member.component.css']
 })
-export class AddContactComponent {
+export class AddChatMemberComponent {
 
   contactEmail: string = "";
-  public onClose: Subject<UserDto>;
+  roomId!: number;
+  public onClose: Subject<RoomDto>;
   constructor(public bsModalRef: BsModalRef, private contactService: ContactService) { 
     this.onClose = new Subject();
   }
 
 
   addContact() {
-    this.contactService.addContact(this.contactEmail).subscribe({
-      next: (contact) => {
-        this.onClose.next(contact);
+    this.contactService.addGroupMember(this.roomId, this.contactEmail).subscribe({
+      next: (room) => {
+        this.onClose.next(room);
         this.bsModalRef.hide();
       },
       error: () => {

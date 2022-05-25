@@ -25,8 +25,10 @@
         <i class="fas fa-paperclip"></i>
       </label>
       <input id="file-upload" type="file" (change)="sendFile($event)" accept=".jpg, .png,.pdf,.doc,.docx">
-      <textarea class="form-control type_msg" placeholder="Type your message..." #messageBox></textarea>
-      <span class="input-group-text send_btn" (click)="sendMessage(messageBox.value)">
+      <textarea class="form-control type_msg" placeholder="Type your message..."
+        name="message" [(ngModel)]="message">
+      </textarea>
+      <span class="input-group-text send_btn" (click)="sendMessage()">
         <i class="fas fa-location-arrow"></i>
       </span>
     </form>

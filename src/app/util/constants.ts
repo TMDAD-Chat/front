@@ -27,15 +27,23 @@ export class Constants {
     `${this.messageReceiveApi}/room/${roomId}/conversation/${email}`;
   //#endregion
 
+  //#region userApi
   public static readonly userApi = `${environment.gateway}/v1/user`;
   public static getOrCreateUserEnpoint = (email: string) =>
     `${this.userApi}/user/${email}`;
+  public static createRoomEndpoint = (email: string) =>
+    `${this.userApi}/room/${email}`;
   public static getRoomInfoEndpoint = (roomId: number) =>
     `${this.userApi}/room/${roomId}`;
   public static addContactEndpoint = (email: string, contactEmail: string) =>
     `${this.userApi}/user/${email}/contacts/${contactEmail}`;
   public static conversationsListEndpoint = (email: string) =>
     `${this.userApi}/user/${email}/contacts`;
+  public static addUserToRoomEndpoint = (roomId: number, userEmail: string) =>
+    `${this.userApi}/room/${roomId}/user/${userEmail}`;
+  public static getRoomListEndpoint = (email: string) =>
+    `${this.userApi}/room/list/${email}`;
+  //#endregion
 
   public static readonly defaultImage =
     'https://therichpost.com/wp-content/uploads/2020/06/avatar2.png';

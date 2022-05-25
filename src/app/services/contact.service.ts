@@ -39,9 +39,31 @@ export class ContactService {
     );
   }
 
+  createGroup(roomName: string) {
+    return this.httpClient.post<RoomDto>(
+      Constants.createRoomEndpoint(this.auth.userDetails.email || ''),
+      { roomName }
+    );
+  }
+
   getRoomInformation(roomId: number) : Observable<RoomDto> {
     return this.httpClient.get<RoomDto>(
       Constants.getRoomInfoEndpoint(roomId)
+    );
+  }
+
+  getRoomList() {
+    return this.httpClient.get<RoomDto[]>(
+      Constants.getRoomListEndpoint(this.auth.userDetails.email || '')
+    );
+  }
+
+  addGroupMember(roomId: number, userEmail: string) {
+    let formData: FormData = new FormData();
+    formData.append('owner', this.auth.userDetails.email || "");
+    return this.httpClient.put<RoomDto>(
+      Constants.addUserToRoomEndpoint(roomId, userEmail),
+      formData
     );
   }
 }

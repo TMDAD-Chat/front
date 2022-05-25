@@ -94,7 +94,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   getConversationOfContact(selectedContact: UserDto) : MessageInterface[] {
-    console.log("Obtained conversation of contact: %s", selectedContact.email)
     let messages = this.messages.get(selectedContact.email);
     if(messages === undefined){
       console.log("No messages found...")

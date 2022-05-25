@@ -15,7 +15,7 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'room/:id',
+    path: 'room',
     loadChildren: () =>
       import('./components/room/room.module').then((m) => m.RoomModule),
     canLoad: [AuthGuard]

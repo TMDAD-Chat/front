@@ -14,21 +14,24 @@ export class ConversationComponent implements OnInit {
 
   @Input() contact!: UserDto;
   @Input() conversation!: MessageInterface[];
+  message: string = "";
 
   constructor(private conversationService: ConversationService, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
-  sendMessage(message: string) {
+  sendMessage() {
     if(this.authService.userDetails.email !== null) {
       this.conversationService
         .sendMessage(
-          message,
+          this.message,
           this.authService.userDetails.email,
           this.contact.email
         )
-        .subscribe((res) => {console.log(res)});
+        .subscribe((res) => {
+          this.message = "";
+        });
     }
   }
 

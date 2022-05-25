@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">New Member</h4>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef?.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #contactForm="ngForm">
+    <label for="email">Insert your contact email</label>
+    <input
+      id="email"
+      class="form-control"
+      name="email"
+      type="email"
+      placeholder="email"
+      [(ngModel)]="contactEmail"
+      required
+    />
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    class="btn btn-success"
+    (click)="addContact()"
+    [disabled]="contactForm.invalid"
+  >
+    Add
+  </button>
+  <button class="btn btn-secondary" (click)="bsModalRef?.hide()">Cancel</button>
+</div>
