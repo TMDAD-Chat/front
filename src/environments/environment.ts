@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   gateway: "https://gateway:8443",
+  //gateway: "https://jenkins-worker1.ustore.dev:8443",
   messageReceiveApi: '/v1/messagereceive',
   firebase: {
     apiKey: "AIzaSyCt9SroQN6JI9stZr3i6k9MPgfwurJw1Qg",
