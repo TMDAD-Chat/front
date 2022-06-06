@@ -5,7 +5,7 @@ export class Constants {
   public static getEventsEnpoint = (email: string) =>
     `${this.messagePushApi}/user/${email}`;
   public static getRoomEventsEnpoint = (roomId: number, userEmail: string) =>
-    `${this.messagePushApi}/room/${roomId}/messages/${userEmail}`;
+    `${this.messagePushApi}/room/${roomId}/messages`;
 
   //#region messageReceiver endpoints
   public static readonly messageReceiveApi = `${environment.gateway}/v1/messagereceive`;
@@ -24,7 +24,7 @@ export class Constants {
   public static getOldGlobalMessagesEndpoint = (loggedUser: string) =>
     `${this.messageReceiveApi}/user/${loggedUser}/conversation/global/`;
   public static getOldRoomMessagesEndpoint = (roomId: number, email: string) =>
-    `${this.messageReceiveApi}/room/${roomId}/conversation/${email}`;
+    `${this.messageReceiveApi}/room/${roomId}/conversation`;
   //#endregion
 
   //#region userApi
