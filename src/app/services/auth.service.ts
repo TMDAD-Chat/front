@@ -6,6 +6,11 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../util/dto/user';
 import { Constants } from '../util/constants';
 
+interface Pair<T, U> {
+  left: T;
+  right: U;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,6 +29,14 @@ export class AuthService {
         console.log('Auth error');
       }
     })
+  }
+
+  async getToken(): Promise<Pair<string, string>> {
+    const user = await this.firebaseAuth.currentUser;
+    if(user !== null && user.email !== null){
+      return {left: await user.getIdToken(), right: user.email};
+    }
+    return {left: "", right: ""};
   }
 
   async signInWithGoogle() {
